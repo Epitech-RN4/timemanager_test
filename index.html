@@ -16,26 +16,15 @@
             padding: 20px;
             text-align: center;
         }
-        form {
-            margin: 20px;
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input[type="time"] {
-            padding: 5px;
-        }
-        input[type="submit"] {
+        button {
             padding: 10px;
             background: #333;
             color: #fff;
             border: none;
             cursor: pointer;
+            margin: 10px;
         }
-        #workHoursChart {
-            width: 80%;
+        canvas {
             margin: 20px auto;
             border: 1px solid #ccc;
             padding: 10px;
@@ -46,55 +35,69 @@
     <header>
         <h1>Pointage des heures de travail</h1>
     </header>
-    <form id="workHoursForm">
-        <label for="arrivalTime">Heure d'arrivée : </label>
-        <input type="time" id="arrivalTime" name="arrivalTime">
 
-        <label for="departureTime">Heure de départ : </label>
-        <input type="time" id="departureTime" name="departureTime">
-
-        <input type="submit" value="Enregistrer" onclick="generateChart()">
-    </form>
+    <div>
+        <button id="arrivalButton" onclick="recordArrivalTime()">Heure d'arrivée</button>
+        <button id="departureButton" onclick="recordDepartureTime()">Heure de départ</button>
+    </div>
 
     <canvas id="workHoursChart"></canvas>
 
     <script>
+        function recordArrivalTime() {
+            const currentDate = new Date();
+            const arrivalTime = currentDate.toLocaleTimeString();
+            localStorage.setItem('arrivalTime', arrivalTime);
+            alert("Heure d'arrivée enregistrée : " + arrivalTime);
+            generateChart();
+        }
+
+        function recordDepartureTime() {
+            const currentDate = new Date();
+            const departureTime = currentDate.toLocaleTimeString();
+            localStorage.setItem('departureTime', departureTime);
+            alert("Heure de départ enregistrée : " + departureTime);
+            generateChart();
+        }
+
         function generateChart() {
-            const arrivalTime = document.getElementById('arrivalTime').value;
-            const departureTime = document.getElementById('departureTime').value;
+            const arrivalTime = localStorage.getItem('arrivalTime');
+            const departureTime = localStorage.getItem('departureTime');
 
-            // Convertir les heures au format HH:mm en heures décimales pour le calcul
-            const arrivalHours = parseFloat(arrivalTime.split(":")[0]) + parseFloat(arrivalTime.split(":")[1]) / 60;
-            const departureHours = parseFloat(departureTime.split(":")[0]) + parseFloat(departureTime.split(":")[1]) / 60;
+            if (arrivalTime && departureTime) {
+                const arrivalHours = new Date(arrivalTime).getHours() + new Date(arrivalTime).getMinutes() / 60;
+                const departureHours = new Date(departureTime).getHours() + new Date(departureTime).getMinutes() / 60;
 
-            // Calculer le nombre d'heures travaillées
-            const workedHours = departureHours - arrivalHours;
+                const workedHours = departureHours - arrivalHours;
 
-            // Obtenir la date actuelle pour l'étiquette du graphique
-            const currentDate = new Date().toLocaleDateString();
+                const currentDate = new Date().toLocaleDateString();
 
-            const ctx = document.getElementById('workHoursChart').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [currentDate],
-                    datasets: [{
-                        label: 'Heures travaillées',
-                        data: [workedHours],
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                const ctx = document.getElementById('workHoursChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [currentDate],
+                        datasets: [{
+                            label: 'Heures travaillées',
+                            data: [workedHours],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
+
+        // Générer le graphique au chargement de la page (s'il y a des données)
+        generateChart();
     </script>
 </body>
 </html>
