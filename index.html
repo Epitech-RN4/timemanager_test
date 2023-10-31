@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Pointage des heures de travail</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,7 +34,7 @@
             border: none;
             cursor: pointer;
         }
-        #chart {
+        #workHoursChart {
             width: 80%;
             margin: 20px auto;
             border: 1px solid #ccc;
@@ -52,12 +53,48 @@
         <label for="departureTime">Heure de départ : </label>
         <input type="time" id="departureTime" name="departureTime">
 
-        <input type="submit" value="Enregistrer">
+        <input type="submit" value="Enregistrer" onclick="generateChart()">
     </form>
 
-    <div id="chart">
-        <!-- Le graphique s'affichera ici -->
-        <!-- Ce serait normalement généré par JavaScript ou un backend -->
-    </div>
+    <canvas id="workHoursChart"></canvas>
+
+    <script>
+        function generateChart() {
+            const arrivalTime = document.getElementById('arrivalTime').value;
+            const departureTime = document.getElementById('departureTime').value;
+
+            // Convertir les heures au format HH:mm en heures décimales pour le calcul
+            const arrivalHours = parseFloat(arrivalTime.split(":")[0]) + parseFloat(arrivalTime.split(":")[1]) / 60;
+            const departureHours = parseFloat(departureTime.split(":")[0]) + parseFloat(departureTime.split(":")[1]) / 60;
+
+            // Calculer le nombre d'heures travaillées
+            const workedHours = departureHours - arrivalHours;
+
+            // Obtenir la date actuelle pour l'étiquette du graphique
+            const currentDate = new Date().toLocaleDateString();
+
+            const ctx = document.getElementById('workHoursChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [currentDate],
+                    datasets: [{
+                        label: 'Heures travaillées',
+                        data: [workedHours],
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
