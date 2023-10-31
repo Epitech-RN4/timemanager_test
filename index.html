@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pointage des heures de travail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            margin: 20px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="time"] {
+            padding: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #chart {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pointage des heures de travail</h1>
+    </header>
+    <form id="workHoursForm">
+        <label for="arrivalTime">Heure d'arrivée : </label>
+        <input type="time" id="arrivalTime" name="arrivalTime">
+
+        <label for="departureTime">Heure de départ : </label>
+        <input type="time" id="departureTime" name="departureTime">
+
+        <input type="submit" value="Enregistrer">
+    </form>
+
+    <div id="chart">
+        <!-- Le graphique s'affichera ici -->
+        <!-- Ce serait normalement généré par JavaScript ou un backend -->
+    </div>
+</body>
+</html>
