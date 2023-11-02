@@ -1,0 +1,46 @@
+name: Docker Compose Deploy
+
+on:
+  push:
+    branches:
+      - main  # Définissez la branche sur laquelle vous souhaitez déclencher le déploiement
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Utilisez l'image du système d'exploitation appropriée pour votre serveur
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: docker-compose --version  # Assurez-vous que Docker Compose est installé sur l'agent
+
+      - name: Login to your Docker registry (if needed)
+        run: |
+          # Si votre image Docker est stockée dans un registre privé, vous devez vous connecter
+          # Utilisez `docker login` avec les informations de votre registre Docker
+
+      - name: Deploy using Docker Compose
+        run: |
+          # Utilisez ssh pour vous connecter à votre serveur distant
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} user@your-server-ip-address << 'ENDSSH'
+            # Naviguez vers le répertoire de votre application
+            cd /path/to/your/app
+
+            # Mettez à jour votre code source (par exemple, en utilisant git pull)
+            git pull
+
+            # Arrêtez et supprimez les conteneurs existants
+            docker-compose down
+
+            # Mettez à jour votre Docker Compose YML (s'il a changé)
+
+            # Redémarrez votre application avec la nouvelle version
+            docker-compose up -d
+          ENDSSH
+
+        env:
+          # Assurez-vous de stocker votre clé SSH privée en tant que secret dans GitHub
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
