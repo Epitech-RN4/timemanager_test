@@ -11,7 +11,7 @@ services:
       - POSTGRES_USER = ${{ secret.POSTGRES_USER }}
       - POSTGRES_PASSWORD = ${{ secret.POSTGRES_PASSWORD }}
       - POSTGRES_DB=timemanager_dev
-      - DATABASE_URL=ecto://postgres:postgres@db/timemanager_dev
+      - DATABASE_URL=ecto://${{ secret.POSTGRES_USER }}:${{ secret.POSTGRES_PASSWORD }}@db/timemanager_dev
     ports:
       - "4000:4000"
     depends_on:
