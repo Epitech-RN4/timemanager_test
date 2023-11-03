@@ -3,9 +3,11 @@ version: '3.8'
 services:
   front:
     build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
     volumes:
       - .:/app
-    working_dir: /app
+    working_dir: /app/frontend
     environment:
       - VITE_BASE_URL=http://localhost:5173
     ports:
@@ -16,10 +18,12 @@ services:
 
 
   web:
-    build: .
+    build: 
+      context: ./backend
+      dockerfile: backend.dockerfile
     volumes:
       - .:/app
-    working_dir: /app
+    working_dir: /app/backend
     environment:
       - MIX_ENV=dev
       - POSTGRES_USER=postgres
