@@ -1,10 +1,17 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { UserStateInterface } from "../reducers/UserReducer";
 import { UserContext } from "../context/userContext";
+ // Assurez-vous que le chemin est correct
+
+
+export interface UserStateInterface {
+  isLogged: boolean;
+  username: string;
+  email: string;
+}
 
 const ProtectedRoute = () => {
-  const { userState } = useContext(UserContext) as {
+  const { userState } = useContext(UserContext) as unknown as {
     userState: UserStateInterface;
   };
 
@@ -12,7 +19,7 @@ const ProtectedRoute = () => {
     return <Navigate to="/auth/login" replace />;
   }
 
-  return <Outlet/>;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
