@@ -14,7 +14,7 @@ services:
       - "5173:5173"
     depends_on:
       - web
-    command: bash -c "npm run dev"
+    command: npm run dev
 
 
   web:
@@ -37,7 +37,8 @@ services:
 
 
   db:
-    image: postgres:13
+    image: postgres:16.0-alpine3.18
+    
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

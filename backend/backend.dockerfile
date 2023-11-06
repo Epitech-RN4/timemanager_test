@@ -1,5 +1,5 @@
 # Utiliser une image officielle Elixir
-FROM elixir:1.15.6
+FROM elixir:1.15.7-alpine
 
 # Installer hex et rebar
 RUN mix local.hex --force && \

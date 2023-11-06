@@ -1,6 +1,6 @@
 # We don't want to start from scratch.
 # That is why we tell node here to use the current node image as base.
-FROM node:20
+FROM node:alpine3.17
 
 # The /app directory should act as the main application directory
 WORKDIR /app
