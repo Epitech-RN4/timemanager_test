@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y inotify-tools
 
 
 # Créer un répertoire pour votre application
-WORKDIR /app/backend
+WORKDIR /app
 
 # Copier les dépendances de l'application Elixir
 COPY mix.exs ./

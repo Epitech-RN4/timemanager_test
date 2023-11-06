@@ -1,9 +1,9 @@
 # We don't want to start from scratch.
 # That is why we tell node here to use the current node image as base.
-FROM node:alpine3.11
+FROM node:20
 
 # The /app directory should act as the main application directory
-WORKDIR /app/frontend
+WORKDIR /app
 
 # Copy the app package and package-lock.json file
 COPY package*.json ./
@@ -15,9 +15,8 @@ RUN npm install
 COPY . .
 
 # Expose $PORT on container.
-# We use a varibale here as the port is something that can differ on the environment.
 EXPOSE 5173
 
 # Start the app
-CMD [ "npm", "start" ]
+CMD [ "vite" ]
 
