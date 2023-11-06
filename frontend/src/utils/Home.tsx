@@ -1,9 +1,7 @@
-import * as React from 'react';
 
-export interface IAppProps {
-}
+export interface IAppProps {}
 
-export default function Home (props: IAppProps) {
+export default function Home({}: IAppProps) {
   return (
     <div>
       <p>home</p>
