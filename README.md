@@ -16,3 +16,11 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Add .env file
+
+  * Don't forget to add in your project a file " .env " in the same level of your docker-compose
+  * Add your personnal informations about your postgres database : 
+      POSTGRES_USER=username
+      POSTGRES_PASSWORD=password
+      POSTGRES_DB=database-name
