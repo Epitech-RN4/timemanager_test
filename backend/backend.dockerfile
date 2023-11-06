@@ -27,5 +27,3 @@ RUN mix do compile
 # Exposer le port utilisé par Phoenix
 EXPOSE 4000
 
-# Définir l'entrée par défaut pour démarrer l'application
-CMD ["mix", "phx.server"]

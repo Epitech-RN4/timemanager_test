@@ -17,6 +17,5 @@ COPY . .
 # Expose $PORT on container.
 EXPOSE 5173
 
-# Start the app
-CMD [ "vite" ]
+
 
