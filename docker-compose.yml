@@ -14,7 +14,7 @@ services:
       - "5173:5173"
     depends_on:
       - web
-    command: bash -c "npm run dev"
+    command: "npm run dev"
 
 
   web:
@@ -33,11 +33,11 @@ services:
       - "4000:4000"
     depends_on:
       - db
-    command: bash -c "mix deps.get && mix ecto.setup && mix phx.server"
+    command: sh -c "mix deps.get && mix ecto.setup && mix phx.server"
 
 
   db:
-    image: postgres:13
+    image: postgres:13-alpine
     environment:
       - POSTGRES_USER= ${POSTGRES_USER}
       - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
